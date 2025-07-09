@@ -179,15 +179,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-                    </div>
-                    <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
-                    </div>
-                </div>
 
+                {{-- @if (Auth::check()) --}}
+                @auth
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                        <div class="image">
+                            <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                        </div>
+                        <div class="info">
+                            <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                            <form action="{{ route('logout') }}" method="post">
+                                {{-- post \ put \ dalete --}}
+                                @csrf  
+                                {{-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> --}}
+                                {{-- {{ csrf_field() }} --}}
+                                <button type="submit" class="btn btn-sm btn-outline-primary">Logout</button>
+                            </form>
+                        </div>
+                    </div>
+                @endauth
+                {{-- @endif --}}
                 <!-- SidebarSearch Form -->
                 <div class="form-inline">
                     <div class="input-group" data-widget="sidebar-search">
@@ -202,7 +213,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </div>
 
                 @include('layouts.partials.nav')
-               
+
             </div>
             <!-- /.sidebar -->
         </aside>
@@ -213,12 +224,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">@yield('title','Dashboard Title')</h1>
+                            <h1 class="m-0">@yield('title', 'Dashboard Title')</h1>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 @section('breadcrumb')
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
                                 @show
                             </ol>
                         </div><!-- /.col -->
@@ -257,7 +268,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 Anything you want
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
+            <strong>Copyright &copy; 2014-2021 <a href="http://127.0.0.1:8000/">Jad_Store.com</a>.</strong> All rights
             reserved.
         </footer>
     </div>
