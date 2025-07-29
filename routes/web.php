@@ -9,11 +9,7 @@ Route::get('/', function () {
 });
 
 
-    Route::get('/admin', [DashboardController::class, 'index'])
-    ->middleware(['auth'])
-    ->name('dashboard');
-
-    
 //    ->middleware(['auth' , 'verified'])
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
+require __DIR__ . '/dashboard.php';
