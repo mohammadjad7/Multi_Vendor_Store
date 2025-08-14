@@ -12,7 +12,7 @@
     <div class="mb-5">
         <a href="{{ route('categories.create') }}" class="btn btn-sm btn-outline-primary">Create Category</a>
     </div>
-    
+
     @if (session()->has('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -42,7 +42,7 @@
         <tbody>
             @forelse($categories as $category)
                 <tr>
-                    <td></td>
+                    <td><img src="{{ asset('storage/' . $category->image) }}" alt="#" height="50" width="50"></td>
                     <td>{{ $category->id }}</td>
                     <td>{{ $category->name }}</td>
                     <td>{{ $category->parent_id }}</td>
