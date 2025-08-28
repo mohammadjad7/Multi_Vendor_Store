@@ -1,17 +1,17 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Categories')
+@section('title', 'Products')
 
 @section('breadcrumb')
     @parent
-    <i class="breadcrumb-item active">Categories</i>
+    <i class="breadcrumb-item active">Products</i>
 @endsection
 
 @section('content')
 
     <div class="mb-5">
-        <a href="{{ route('categories.create') }}" class="btn btn-sm btn-outline-primary">Create Category</a>
-        <a href="{{ route('categories.trash') }}" class="btn btn-sm btn-outline-dark">Trash</a>
+        <a href="{{ route('products.create') }}" class="btn btn-sm btn-outline-primary">Create product</a>
+        {{-- <a href="{{ route('Products.trash') }}" class="btn btn-sm btn-outline-dark">Trash</a> --}}
     </div>
 
     <x-alert type="success" />
@@ -38,31 +38,29 @@
                 <th></th>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Parent</th>
-                <th>Products Count</th>
+                <th>Category</th>
+                <th>Store</th>
                 <th>Status</th>
                 <th>Created At</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            @forelse($categories as $category)
+            @forelse($products as $product)
                 <tr>
-                    <td><img src="{{ asset('storage/' . $category->image) }}" alt="#" height="50" width="50">
+                    <td><img src="{{ asset('storage/' . $product->image) }}" alt="#" height="50" width="50">
                     </td>
-                    <td>{{ $category->id }}</td>
-                    <td><a href="{{ route('categories.show' , $category->id) }}">{{ $category->name }}</a></td>
-                    {{-- <td>{{ $category->parent_name }}</td> --}}
-                    {{-- <td>{{ $category->parent ? $category->parent->name : 'Null' }}</td> --}}
-                    <td>{{ $category->parent->name}}</td>
-                    <td>{{ $category->products_count}}</td>
-                    <td>{{ $category->status }}</td>
-                    <td>{{ $category->created_at }}</td>
+                    <td>{{ $product->id }}</td>
+                    <td>{{ $product->name }}</td>
+                    <td>{{ $product->category->name }}</td>
+                    <td>{{ $product->store->name }}</td>
+                    <td>{{ $product->status }}</td>
+                    <td>{{ $product->created_at }}</td>
                     <td>
                         <div class="action-button">
-                            <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-info rounded-pill"><i
+                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-info rounded-pill"><i
                                     class="fas fa-edit"></i> Edit</a>
-                            <form action="{{ route('categories.destroy', $category->id) }}" method="post"
+                            <form action="{{ route('products.destroy', $product->id) }}" method="post"
                                 style="display: inline;">
                                 @csrf
                                 {{-- Form Method Spoofing --}}
@@ -76,12 +74,12 @@
                 </tr>
             @empty
                 <tr class="text-center">
-                    <td colspan="9"> No Categories Defined!!</td>
+                    <td colspan="9"> No Products Defined!!</td>
                 </tr>
             @endforelse
         </tbody>
     </table>
 
-    {{ $categories->withQueryString()->links() }}
-    {{-- {{ $categories->withQueryString()->links('folder/file you make it {view pagination}') }} --}}
+    {{ $products->withQueryString()->links() }}
+    {{-- {{ $Products->withQueryString()->links('folder/file you make it {view pagination}') }} --}}
 @endsection

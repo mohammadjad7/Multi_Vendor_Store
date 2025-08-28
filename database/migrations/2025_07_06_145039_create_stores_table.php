@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stores', function (Blueprint $table) {
+        Schema::create( 'stores', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             // تابع تحويل رابط المتجر إلى رابط سليدي
@@ -22,6 +22,7 @@ return new class extends Migration
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
+
     }
 
     /**
