@@ -48,4 +48,10 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class,'user_id','id')
+        ->withDefault('You did not have Account ');
+    }
 }
