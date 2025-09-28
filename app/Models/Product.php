@@ -11,6 +11,17 @@ class Product extends Model
 {
     use HasFactory;
     //
+    protected function tags()
+    {
+        return $this->belongsToMany(
+            Tag::class, // Related Model
+            "product_tag", // Pivot table name
+            "product_id", // Fk in pivot table for the current model
+            "tag_id", // Fk in pivot table for the related model
+            'id', // Pk current model
+            'id', // Pk related model
+        );
+    }
     protected static function booted()
     {
         static::addGlobalScope('store', new StoreScope());

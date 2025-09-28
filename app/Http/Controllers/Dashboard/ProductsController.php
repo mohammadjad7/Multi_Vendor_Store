@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProductsController extends Controller
 {
@@ -51,15 +53,34 @@ class ProductsController extends Controller
     public function edit($id)
     {
         //
-        $products = Product::findOrFail($id);
+        $product = Product::findOrFail($id);
+        return view("dashboard.products.edit", compact("product"));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Product $product)
     {
         //
+        $product->update($request->except('tags'));
+        $tag_ids = [];
+        $tags = explode(",", $request->post('tags'));
+        foreach ($tags as $t_name) {
+            $slug = Str::slug($t_name);
+            $tag = Tag::where('slug', $slug)->first();
+            if (!$tag) {
+                $tag = Tag::create([
+                    'name' => $t_name,
+                    'slug' => $slug,
+                ]);
+            }
+            $tag_ids[] = $tag->id;
+        }
+
+        $product->tags()->sync($tag_ids);
+
+        return redirect()->route('products.index')->with('success', 'product update');
     }
 
     /**
