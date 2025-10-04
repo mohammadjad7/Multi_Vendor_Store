@@ -6,7 +6,7 @@
 <label for="">{{ $label }}</label>
 @endif
 
-<select
+<select 
     name="{{ $name }}"
     {{ $attributes->class([
         'form-control',

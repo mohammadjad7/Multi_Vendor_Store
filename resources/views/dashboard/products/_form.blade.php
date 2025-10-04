@@ -6,7 +6,8 @@
     <select name="category_id" class="form-control form-select">
         <option value="">Primary Category</option>
         @foreach (App\Models\Category::all() as $category)
-            <option value="{{ $category->id }}" @selected(old('category_id', $product->category_id) == $category->id)>{{ $category->name }}</option>
+        <option value="{{ $category->id }}" @selected(old('category_id', $product->category_id) == $category->id)>
+            {{ $category->name }}</option>
         @endforeach
     </select>
 </div>
@@ -18,7 +19,7 @@
     <x-form.label id="image">Image</x-form.label>
     <x-form.input type="file" name="image" accept="image/*" />
     @if ($product->image)
-        <img src="{{ asset('storage/' . $product->image) }}" alt="" height="60">
+    <img src="{{ asset('storage/' . $product->image) }}" alt="" height="60">
     @endif
 </div>
 <div class="form-group">
@@ -41,14 +42,19 @@
 </div>
 
 @push('styles')
-    <link href="{{ asset('css/tagify.css') }}" rel="stylesheet" type="text/css" />
+{{-- <link href="{{ asset('css/tagify.css') }}" rel="stylesheet" type="text/css" /> --}}
+
+<link href="{{ asset("https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css") }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('js/tagify.min.js') }}"></script>
-    <script src="{{ asset('js/tagify.polyfills.min.js') }}"></script>
-    <script>
-        var inputElm = document.querySelector('[name=tags]'),
-            tagify = new Tagify(inputElm);
-    </script>
+<script src="{{ asset("https://cdn.jsdelivr.net/npm/@yaireo/tagify") }}"></script>
+<script src="{{ asset("https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js") }}"></script>
+{{-- <script src="{{ asset('js/tagify.min.js') }}"></script> --}}
+{{-- <script src="{{ asset('js/tagify.polyfills.min.js') }}"></script> --}}
+<script>
+    var inputElm = document.querySelector('[name=tags]'),
+     tagify = new Tagify(inputElm);
+
+</script>
 @endpush

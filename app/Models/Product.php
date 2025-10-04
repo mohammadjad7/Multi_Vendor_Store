@@ -10,8 +10,21 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        "name",
+        "slug",
+        "description",
+        "image",
+        "price",
+        "compare_price",
+        "quantity",
+        "category_id",
+        "store_id",
+        "status",
+    ];
     //
-    protected function tags()
+    public function tags()
     {
         return $this->belongsToMany(
             Tag::class, // Related Model

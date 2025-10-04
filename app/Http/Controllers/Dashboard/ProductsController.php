@@ -54,7 +54,8 @@ class ProductsController extends Controller
     {
         //
         $product = Product::findOrFail($id);
-        return view("dashboard.products.edit", compact("product"));
+        $tags = implode(',', $product->tags()->pluck('name')->toArray());
+        return view("dashboard.products.edit", compact("product", "tags"));
     }
 
     /**
@@ -64,14 +65,18 @@ class ProductsController extends Controller
     {
         //
         $product->update($request->except('tags'));
+
+        $tags = json_decode($request->post('tags'));
         $tag_ids = [];
-        $tags = explode(",", $request->post('tags'));
-        foreach ($tags as $t_name) {
-            $slug = Str::slug($t_name);
-            $tag = Tag::where('slug', $slug)->first();
+
+        $saved_tags = Tag::all();
+
+        foreach ($tags as $item) {
+            $slug = Str::slug($item->value);
+            $tag = $saved_tags->where('slug', $slug)->first();
             if (!$tag) {
                 $tag = Tag::create([
-                    'name' => $t_name,
+                    'name' => $item->value,
                     'slug' => $slug,
                 ]);
             }

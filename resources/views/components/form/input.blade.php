@@ -1,14 +1,19 @@
-@props(['type' => 'text', 'value' => '', 'name', 'label' => false])
+@props([
+    'type' => 'text', 'name', 'value' => '', 'label' => false
+])
 
-@if ($label)
-    <label for="">{{ $label }}</label> 
+@if($label)
+<label for="">{{ $label }}</label>
 @endif
 
-<input type="{{ $type }}" name="{{ $name }}" value="{{ old($name, $value) }}"
-    {{ $attributes->class(['form-control', 'is-invalid' => $errors->has($name)]) }}>
+<input 
+    type="{{ $type }}"
+    name="{{ $name }}"
+    value="{{ old($name, $value) }}"
+    {{ $attributes->class([
+        'form-control',
+        'is-invalid' => $errors->has($name)
+    ]) }}
+>
 
-@error($name)
-    <div class="text-danger">
-        {{ $message }}
-    </div>
-@enderror
+<x-form.validation-feedback :name="$name" />

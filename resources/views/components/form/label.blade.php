@@ -1,4 +1,5 @@
 @props([
-    'id' => '',
+    'id' => ''
 ])
+
 <label for="{{ $id }}">{{ $slot }}</label>
